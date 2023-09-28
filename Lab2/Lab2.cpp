@@ -23,6 +23,7 @@ int main()
     }
     grid.push_back(1);
     cout << endl;
+
     // Метод 1
     double prevY = 1, currY, newY;
     for (int i = 1; i < grid.size(); i++)
@@ -37,6 +38,7 @@ int main()
         prevY = currY;
     }
     cout << endl;
+
     // Метод 2
     prevY = 1;
     for (int i = 1; i < grid.size(); i++)
