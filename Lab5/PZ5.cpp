@@ -60,8 +60,8 @@ void DirectMethod() {
     double prevP1 = 1e+5;
     int i;
 
-    cout << "t" << "\t" << setprecision(15) << "P1" << "\t\t" << "Q2" << endl;
-    cout << grid[0] << "\t" << setprecision(15) << prevP1 << "\t\t" << prevQ2 << endl;
+    cout /*<< "t" << "\t"*/ << setprecision(15)/* << "P1" << "\t\t"*/ << "Q2" << endl;
+    cout /*<< grid[0] << "\t"*/ << setprecision(15) /*<< prevP1 << "\t\t"*/ << prevQ2 << endl;
     for (i = 0; i < grid.size() - 1; i++)
     {
         pk1 = P1(grid[i], prevQ2);
@@ -79,7 +79,7 @@ void DirectMethod() {
         currP1 = prevP1 + (step / 6) * (pk1 + 2 * pk2 + 2 * pk3 + pk4);
         currQ2 = prevQ2 + (step / 6) * (qk1 + 2 * qk2 + 2 * qk3 + qk4);
 
-        if (i % 100 == 0 || i == grid.size() - 2)
+        if (grid[i + 1] == 10 || i == grid.size() - 2)
             cout << grid[i + 1] << "\t\t" << setprecision(15) << currP1 << "\t\t" << currQ2 << endl;
         prevP1 = currP1;
         prevQ2 = currQ2;
@@ -93,27 +93,27 @@ void SequentialMethod() {
     double prevP1 = 1e+5;
     int i;
 
-    cout << "t" << "\t" << setprecision(15) << "P1" << "\t\t" << "Q2" << endl;
-    cout << grid[0] << "\t" << setprecision(15) << prevP1 << "\t\t" << prevQ2 << endl;
+    //cout /*<< "t" << "\t"*/ << setprecision(15) /*<< "P1" << "\t\t"*/ << "Q2" << endl;
+    cout /*<< grid[0] << "\t"*/ << setprecision(15) /*<< prevP1 << "\t\t"*/ << prevQ2 << endl;
     for (i = 0; i < grid.size() - 1; i++)
     {
         pk1 = P1(grid[i], prevQ2);
-        pk2 = PKn(grid[i], prevQ2, prevQ2, step / 2);
-        pk3 = PKn(grid[i], prevQ2, prevQ2, step / 2);
-        pk4 = PKn(grid[i], prevQ2, prevQ2, step);
+        pk2 = PKn(grid[i], prevQ2, 0, step / 2);
+        pk3 = PKn(grid[i], prevQ2, 0, step / 2);
+        pk4 = PKn(grid[i], prevQ2, 0, step);
 
         currP1 = prevP1 + (step / 6) * (pk1 + 2 * pk2 + 2 * pk3 + pk4);
         prevP1 = currP1;
 
         qk1 = Q2(grid[i], prevP1, prevQ2);
-        qk2 = QKn(grid[i], prevQ2, qk1, prevP1, pk1, step / 2);
-        qk3 = QKn(grid[i], prevQ2, qk2, prevP1, pk2, step / 2);
-        qk4 = QKn(grid[i], prevQ2, qk3, prevP1, pk3, step);
+        qk2 = QKn(grid[i], prevQ2, qk1, prevP1, 0, step / 2);
+        qk3 = QKn(grid[i], prevQ2, qk2, prevP1, 0, step / 2);
+        qk4 = QKn(grid[i], prevQ2, qk3, prevP1, 0, step);
 
         currQ2 = prevQ2 + (step / 6) * (qk1 + 2 * qk2 + 2 * qk3 + qk4);
         prevQ2 = currQ2;
 
-        if (i % 100 == 0 || i == grid.size() - 2)
+        if (grid[i + 1] == 10 || i == grid.size() - 2)
             cout << grid[i + 1] << "\t\t" << setprecision(15) << currP1 << "\t\t" << currQ2 << endl;
     }
 }
@@ -123,7 +123,7 @@ int main()
     cin >> step;
     BuildGrid();
     cout << endl;
-    DirectMethod();
-    //SequentialMethod();
+    //DirectMethod();
+    SequentialMethod();
     return 0;
 }
